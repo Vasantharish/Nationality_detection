@@ -29,17 +29,13 @@ def read_image(path):
     except:
          tk.messagebox.showinfo('Error' ,"No dress detected.")
          return
-    # plt.figure(figsize=(15,15))
-    # plt.subplot(1,4,1)
-    # plt.imshow(clr_image)
     region,age = nation(clr_image)
 
     gray_img = image[y:y_end,x:x_end]
     gray_img = cv2.cvtColor(gray_img,cv2.COLOR_BGR2GRAY)
     gray_img = cv2.resize(gray_img,(48,48))
     expression = emotion(gray_img)
-    # plt.subplot(1,4,2)
-    # plt.imshow(gray_img,cmap='gray')
+
 
     shape = image.shape
     y2 =y_end
@@ -48,8 +44,7 @@ def read_image(path):
     x2 += round((shape[1]-x_end)*0.50)
     image1 = image[y_end:y2,x-50:x2]
     image1 = cv2.resize(image1,(48,48))
-    # plt.subplot(1,4,3)
-    # plt.imshow(image1)
+
     pixels = image1.reshape((-1, 3))
     k = 3  # Number of clusters (You can adjust this)
     kmeans = KMeans(n_clusters=k)
@@ -64,11 +59,7 @@ def read_image(path):
 
     color_name = get_closest_color_name(dominant_color)
     text = decision(region,age,expression,color_name)
-    # plt.subplot(1,4,4)
-    # plt.imshow([[dominant_color]])  # Create a small square with the dominant color
-    # plt.title(f"Dominant color: {color_name}")
-    # plt.axis('off')  # Hide axis
-    # plt.show()
+    
     return text
 
 
